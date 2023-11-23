@@ -29,9 +29,6 @@ def subtitle_probe(config, url, **kwargs):
 
     if subdata.text.startswith("WEBVTT"):
         yield subtitle(config, "wrst", url, **kwargs)
-    elif subdata.text.startswith("#EXTM3U"):
-        m3u8 = M3U8(subdata.text)
-        yield subtitle(config, "wrstsegment", url, **kwargs, m3u8=m3u8)
     elif "<?xml" in subdata.text or "<MPD" in subdata.text:
         text = re.sub("&(?!amp;)", "&amp;", subdata.text)
         xmldata = ET.fromstring(text)
